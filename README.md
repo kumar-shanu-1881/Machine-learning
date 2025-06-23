@@ -1,4 +1,4 @@
-# Machine-learning
+# House Prediction Algorithm
 
 # Import necessary libraries
 import numpy as np
