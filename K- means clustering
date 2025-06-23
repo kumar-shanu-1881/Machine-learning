@@ -1,0 +1,42 @@
+# Import necessary libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+# Example dataset: annual income and spending score
+data = {
+    'CustomerID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'AnnualIncome': [15, 16, 17, 18, 19, 100, 105, 110, 115, 120],
+    'SpendingScore': [39, 81, 6, 77, 40, 6, 94, 3, 72, 14]
+}
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+
+# Select relevant features
+X = df[['AnnualIncome', 'SpendingScore']]
+
+# Optional: standardize the data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Apply KMeans clustering
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans.fit(X_scaled)
+
+# Add cluster labels to the original DataFrame
+df['Cluster'] = kmeans.labels_
+
+# Print results
+print(df)
+
+# Visualize the clusters
+plt.figure(figsize=(8, 6))
+plt.scatter(X['AnnualIncome'], X['SpendingScore'], c=df['Cluster'], cmap='viridis', s=100)
+plt.xlabel('Annual Income')
+plt.ylabel('Spending Score')
+plt.title('Customer Segments')
+plt.grid(True)
+plt.show()
